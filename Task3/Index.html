@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Temperature Converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌡️ Temperature Converter</h1>
+    <div class="converter-box">
+      <label for="inputTemp">Enter Temperature:</label>
+      <input type="number" id="inputTemp" placeholder="Enter value" />
+
+      <div class="select-box">
+        <div>
+          <label>From:</label>
+          <select id="fromUnit">
+            <option value="Celsius">Celsius (°C)</option>
+            <option value="Fahrenheit">Fahrenheit (°F)</option>
+            <option value="Kelvin">Kelvin (K)</option>
+          </select>
+        </div>
+
+        <div>
+          <label>To:</label>
+          <select id="toUnit">
+            <option value="Celsius">Celsius (°C)</option>
+            <option value="Fahrenheit">Fahrenheit (°F)</option>
+            <option value="Kelvin">Kelvin (K)</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="convertTemp()">Convert</button>
+
+      <div class="output">
+        <h2 id="result">Converted Value: —</h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function convertTemp() {
+      const input = parseFloat(document.getElementById("inputTemp").value);
+      const from = document.getElementById("fromUnit").value;
+      const to = document.getElementById("toUnit").value;
+      const result = document.getElementById("result");
+
+      if (isNaN(input)) {
+        result.textContent = "Please enter a valid number!";
+        return;
+      }
+
+      let tempC;
+
+      // Convert everything to Celsius first
+      if (from === "Celsius") tempC = input;
+      else if (from === "Fahrenheit") tempC = (input - 32) * 5 / 9;
+      else if (from === "Kelvin") tempC = input - 273.15;
+
+      let output;
+
+      // Convert Celsius to target unit
+      if (to === "Celsius") output = tempC;
+      else if (to === "Fahrenheit") output = (tempC * 9 / 5) + 32;
+      else if (to === "Kelvin") output = tempC + 273.15;
+
+      result.textContent = `Converted Value: ${output.toFixed(2)} °${to.charAt(0)}`;
+    }
+  </script>
+</body>
+</html>
